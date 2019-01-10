@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.greatit</groupId>
+  <artifactId>docker-apacheds</artifactId>
+  <version>0.1.0</version>
+
+  <name>Apache Fediz Docker image</name>
+
+  <properties>
+    <project.java.version>1.8</project.java.version>
+    <ds.version>2.0.0-M25</ds.version>
+    <ds.filename>apacheds-2.0.0.AM25.tar.gz</ds.filename>
+    <ds.url>http://xenia.sote.hu/ftp/mirrors/www.apache.org//directory/apacheds/dist/2.0.0.AM25/apacheds-2.0.0.AM25.tar.gz</ds.url>
+    <ds.sha256>32c9893aa06b293b49b82f89d2f5b92f297e24d3331fd7b196c70dcb07d419df</ds.sha256>
+    <docker-plugin.version>0.28.0</docker-plugin.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>${docker-plugin.version}</version>
+        <configuration>
+          <images>
+            <image>
+              <name>greatit/apacheds</name>
+              <build>
+                <dockerFile>Dockerfile</dockerFile>
+                <tags>
+                  <tag>latest</tag>
+                  <tag>${ds.version}</tag>
+                </tags>
+                <args>
+                  <DS_VERSION>${ds.version}</DS_VERSION>
+                  <DS_URL>${ds.url}</DS_URL>
+                  <DS_SHA256>${ds.sha256}</DS_SHA256>
+                  <DS_FILENAME>${ds.filename}</DS_FILENAME>
+                </args>
+              </build>
+            </image>
+          </images>
+        </configuration>
+        <executions>
+          <execution>
+            <id>build-image</id>
+            <goals>
+              <goal>build</goal>
+            </goals>
+            <phase>install</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>${project.java.version}</source>
+            <target>${project.java.version}</target>
+            <encoding>${project.build.sourceEncoding}</encoding>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
