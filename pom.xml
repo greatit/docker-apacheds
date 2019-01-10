@@ -27,9 +27,13 @@
         <configuration>
           <images>
             <image>
-              <name>greatit/apacheds:${ds.version}</name>
+              <name>greatit/apacheds</name>
               <build>
                 <dockerFile>Dockerfile</dockerFile>
+                <tags>
+                  <tag>latest</tag>
+                  <tag>${ds.version}</tag>
+                </tags>
                 <args>
                   <DS_VERSION>${ds.version}</DS_VERSION>
                   <DS_URL>${ds.url}</DS_URL>
